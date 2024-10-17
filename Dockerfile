@@ -11,8 +11,8 @@ RUN go mod download
 # Copy the application source code
 COPY . .
 
-# Build the Go application with the name DQG
-RUN go build -o DQG .
+# Build the Go application with static linking
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o DQG .
 
 # Stage 2: Create the final image
 FROM alpine:latest
@@ -32,8 +32,11 @@ COPY index.html /app/
 # Create an "outputs" directory for storing CSV files
 RUN mkdir -p /app/outputs
 
+# Ensure the binary has executable permissions
+RUN chmod +x /app/DQG
+
 # Expose the application port
 EXPOSE 8002
 
 # Set the entry point to the Go application
-CMD ["./DQG"]
+CMD ["./app/DQG"]
