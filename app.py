@@ -27,6 +27,6 @@ def convert_to_d2l_format(input_csv, output_csv):
     print(f"Conversion completed! File saved as: {output_csv}")
 
 # Usage
-input_csv = 'input_questions.csv'  # Replace with your actual input CSV file path
-output_csv = 'd2l_brightspace_questions.csv'  # Output path for Brightspace accepted format
+input_csv = 'input_questions.csv'  
+output_csv = 'd2l_brightspace_questions.csv'
 convert_to_d2l_format(input_csv, output_csv)
