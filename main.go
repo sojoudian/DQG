@@ -10,12 +10,12 @@ import (
 	"path/filepath"
 	"strconv"
 	"sync"
+	"time"
 )
 
 const (
-	port          = ":8002"
-	outputFolder  = "outputs"
-	outputCSVFile = "d2l_questions.csv"
+	port         = ":8002"
+	outputFolder = "outputs"
 )
 
 var (
@@ -108,15 +108,18 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 	if action == "next" {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	} else if action == "generate" {
+		// Generate a unique filename with the current date and time
+		timestamp := time.Now().Format("2006_Jan_02_03PM_04")
+		outputFile := filepath.Join(outputFolder, fmt.Sprintf("%s.csv", timestamp))
+
 		// Generate the CSV and clear questions
-		outputFile := filepath.Join(outputFolder, outputCSVFile)
 		err := createCSV(outputFile)
 		if err != nil {
 			http.Error(w, "Error generating CSV", http.StatusInternalServerError)
 			return
 		}
 		questions = []Question{} // Clear questions after generation
-		http.Redirect(w, r, "/download/"+outputCSVFile, http.StatusSeeOther)
+		http.Redirect(w, r, "/download/"+filepath.Base(outputFile), http.StatusSeeOther)
 	}
 }
 
