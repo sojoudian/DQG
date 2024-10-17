@@ -5,9 +5,9 @@ Thumbs.db
 # Editor directories and files
 .idea/
 .vscode/
-.backup/
-.checkedCSVs/
-.qTexts/
+backup/
+checkedCSVs/
+qTexts/
 *.swp
 *.swo
 
