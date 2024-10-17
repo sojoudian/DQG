@@ -39,4 +39,4 @@ RUN chmod +x /app/DQG
 EXPOSE 8002
 
 # Set the entry point to the Go application
-CMD ["./app/DQG"]
+CMD ["./DQG"]
