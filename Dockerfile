@@ -11,8 +11,8 @@ RUN go mod download
 # Copy the application source code
 COPY . .
 
-# Build the Go application
-RUN go build -o goapp .
+# Build the Go application with the name DQG
+RUN go build -o DQG .
 
 # Stage 2: Create the final image
 FROM alpine:latest
@@ -24,7 +24,7 @@ RUN apk add --no-cache ca-certificates
 WORKDIR /app
 
 # Copy the built Go binary from the builder stage
-COPY --from=builder /app/goapp /app/
+COPY --from=builder /app/DQG /app/
 
 # Copy the HTML file to serve
 COPY index.html /app/
@@ -36,4 +36,4 @@ RUN mkdir -p /app/outputs
 EXPOSE 8002
 
 # Set the entry point to the Go application
-CMD ["./goapp"]
+CMD ["./DQG"]
