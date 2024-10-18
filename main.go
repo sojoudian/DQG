@@ -98,7 +98,7 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 		Option4:       r.FormValue("option4"),
 		CorrectAnswer: parseCorrectAnswer(r.FormValue("correct_answer")),
 	}
-
+	// TODO: Add Question ID to the HTML and Reset After Each Download
 	// Increment question ID counter and store the question
 	questionIDCounter++
 	questions = append(questions, question)
