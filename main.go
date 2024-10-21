@@ -61,7 +61,15 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error loading index.html", http.StatusInternalServerError)
 		return
 	}
-	tmpl.Execute(w, nil)
+
+	// Pass the current question ID to the template
+	data := struct {
+		QuestionID int
+	}{
+		QuestionID: questionIDCounter,
+	}
+
+	tmpl.Execute(w, data)
 }
 
 func submitHandler(w http.ResponseWriter, r *http.Request) {
