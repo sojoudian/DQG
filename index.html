@@ -43,6 +43,12 @@
         <div class="card shadow-sm p-4">
             <form action="/submit" method="POST">
                 <div class="mb-3">
+                    <label for="question_id" class="form-label">Question ID</label>
+                    <!-- Display the Question ID, passed from the Go backend, as a read-only field -->
+                    <input type="text" id="question_id" name="question_id" class="form-control" value="{{.QuestionID}}" readonly>
+                </div>
+
+                <div class="mb-3">
                     <label for="question_text" class="form-label">Question Text</label>
                     <input type="text" id="question_text" name="question_text" class="form-control" required>
                 </div>
