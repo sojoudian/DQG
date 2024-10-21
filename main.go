@@ -77,7 +77,6 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
-	//
 
 	mu.Lock()
 	defer mu.Unlock()
@@ -133,8 +132,8 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 		questions = []Question{}
 		questionIDCounter = 1
 
-		// Redirect to download page
-		http.Redirect(w, r, "/download/"+filepath.Base(outputFile), http.StatusSeeOther)
+		// After generating, redirect to the home page to refresh the form
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 }
 
