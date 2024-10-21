@@ -106,7 +106,7 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 		Option4:       r.FormValue("option4"),
 		CorrectAnswer: parseCorrectAnswer(r.FormValue("correct_answer")),
 	}
-	// TODO: Add Question ID to the HTML and Reset After Each Download
+
 	// Increment question ID counter and store the question
 	questionIDCounter++
 	questions = append(questions, question)
@@ -114,19 +114,25 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 	// Handle the action (next or generate)
 	action := r.FormValue("action")
 	if action == "next" {
+		// Continue adding more questions
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	} else if action == "generate" {
 		// Generate a unique filename with the current date and time
 		timestamp := time.Now().Format("2006_Jan_02_03PM_04")
 		outputFile := filepath.Join(outputFolder, fmt.Sprintf("%s.csv", timestamp))
 
-		// Generate the CSV and clear questions
+		// Generate the CSV and reset questions and questionIDCounter
 		err := createCSV(outputFile)
 		if err != nil {
 			http.Error(w, "Error generating CSV", http.StatusInternalServerError)
 			return
 		}
-		questions = []Question{} // Clear questions after generation
+
+		// Clear questions and reset question ID counter
+		questions = []Question{}
+		questionIDCounter = 1
+
+		// Redirect to download page
 		http.Redirect(w, r, "/download/"+filepath.Base(outputFile), http.StatusSeeOther)
 	}
 }
