@@ -77,6 +77,7 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
+	//
 
 	mu.Lock()
 	defer mu.Unlock()
